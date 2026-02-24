@@ -1,0 +1,17 @@
+﻿global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+global using OnlineExamApp.Services.UserMgmt.Core.Entities;
+global using Microsoft.EntityFrameworkCore;
+global using OnlineExamApp.Services.UserMgmt.Core.Fields;
+global using OnlineExamApp.Services.UserMgmt.InfraStructure.Data;
+global using Microsoft.AspNetCore.Identity;
+global using OnlineExamApp.Services.UserMgmt.Core.IRepositories;
+global using System.Linq.Expressions;
+global using OnlineExamApp.Services.UserMgmt.Core.Common;
+global using System.Security.Claims;
+global using OnlineExamApp.Services.UserMgmt.InfraStructure.Repositories;
+global using Microsoft.IdentityModel.Tokens;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Text;
+global using Microsoft.AspNetCore.Http;

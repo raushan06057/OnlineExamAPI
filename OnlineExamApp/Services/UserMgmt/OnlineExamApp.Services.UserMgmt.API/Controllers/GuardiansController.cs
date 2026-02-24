@@ -1,0 +1,57 @@
+﻿namespace OnlineExamApp.Services.UserMgmt.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class GuardiansController : ControllerBase
+{
+    private readonly ILogger<GuardiansController> logger;
+    private readonly IMediator mediator;
+
+    public GuardiansController(ILogger<GuardiansController> logger, IMediator mediator)
+    {
+        this.logger = logger;
+        this.mediator = mediator;
+    }
+
+    [HttpGet(CommonFields.GetById)]
+    public async Task<ActionResult<ResponseModel>> GetById(int id)
+    {
+        var query = new GetGuardianByIdQuery(id);
+        var result = await mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<ResponseModel>> Get()
+    {
+        var query = new GetGuardianListQuery();
+        var result = await mediator.Send(query);
+        return Ok(result);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(typeof(ResponseModel), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> Add([FromBody] CreateGuardianInfoCommand model)
+    {
+        var result = await mediator.Send(model);
+        return Ok(result);
+    }
+
+    [HttpPut]
+    [ProducesResponseType(typeof(ResponseModel), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<ActionResult> Update([FromBody] UpdateGuardianInfoCommand model)
+    {
+        var result = await mediator.Send(model);
+        return Ok(result);
+    }
+
+    [HttpDelete]
+    [ProducesResponseType(typeof(ResponseModel), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> Delete([FromBody] DeleteGuardianInfoCommand model)
+    {
+        var result = await mediator.Send(model);
+        return Ok(result);
+    }
+}

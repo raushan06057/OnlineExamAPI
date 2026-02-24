@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/OnlineExamApp/bin/Debug/net8.0
+/OnlineExamApp/obj
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.InfraStructure/bin/Debug/net8.0
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.InfraStructure/obj
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.Core/bin/Debug/net8.0
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.API/bin/Debug/net8.0
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.API/obj
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.Core/obj
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.Application/bin/Debug/net8.0
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.Application/obj
