@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.34916.146
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{8E5E9A5A-5E8F-437B-B325-561BA4DCE903}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UserMgmt", "UserMgmt", "{340A3990-165E-4EB6-8B17-185948B67B4F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamApp.Services.UserMgmt.API", "OnlineExamApp\Services\UserMgmt\OnlineExamApp.Services.UserMgmt.API\OnlineExamApp.Services.UserMgmt.API.csproj", "{2289C23B-292A-486C-9AA8-810AFC53A8F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamApp.Services.UserMgmt.Application", "OnlineExamApp\Services\UserMgmt\OnlineExamApp.Services.UserMgmt.Application\OnlineExamApp.Services.UserMgmt.Application.csproj", "{65552735-DA3A-4A7F-9A0F-8CA31DF7A71E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamApp.Services.UserMgmt.InfraStructure", "OnlineExamApp\Services\UserMgmt\OnlineExamApp.Services.UserMgmt.InfraStructure\OnlineExamApp.Services.UserMgmt.InfraStructure.csproj", "{4AA34AFB-FDA8-4719-9BF9-6D4C5F1AE4E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineExamApp.Services.UserMgmt.Core", "OnlineExamApp\Services\UserMgmt\OnlineExamApp.Services.UserMgmt.Core\OnlineExamApp.Services.UserMgmt.Core.csproj", "{3F77E71F-859C-488C-BC7E-5BC345D63129}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2289C23B-292A-486C-9AA8-810AFC53A8F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2289C23B-292A-486C-9AA8-810AFC53A8F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2289C23B-292A-486C-9AA8-810AFC53A8F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2289C23B-292A-486C-9AA8-810AFC53A8F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65552735-DA3A-4A7F-9A0F-8CA31DF7A71E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65552735-DA3A-4A7F-9A0F-8CA31DF7A71E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65552735-DA3A-4A7F-9A0F-8CA31DF7A71E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65552735-DA3A-4A7F-9A0F-8CA31DF7A71E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AA34AFB-FDA8-4719-9BF9-6D4C5F1AE4E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AA34AFB-FDA8-4719-9BF9-6D4C5F1AE4E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AA34AFB-FDA8-4719-9BF9-6D4C5F1AE4E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AA34AFB-FDA8-4719-9BF9-6D4C5F1AE4E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F77E71F-859C-488C-BC7E-5BC345D63129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F77E71F-859C-488C-BC7E-5BC345D63129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F77E71F-859C-488C-BC7E-5BC345D63129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F77E71F-859C-488C-BC7E-5BC345D63129}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{340A3990-165E-4EB6-8B17-185948B67B4F} = {8E5E9A5A-5E8F-437B-B325-561BA4DCE903}
+		{2289C23B-292A-486C-9AA8-810AFC53A8F3} = {340A3990-165E-4EB6-8B17-185948B67B4F}
+		{65552735-DA3A-4A7F-9A0F-8CA31DF7A71E} = {340A3990-165E-4EB6-8B17-185948B67B4F}
+		{4AA34AFB-FDA8-4719-9BF9-6D4C5F1AE4E8} = {340A3990-165E-4EB6-8B17-185948B67B4F}
+		{3F77E71F-859C-488C-BC7E-5BC345D63129} = {340A3990-165E-4EB6-8B17-185948B67B4F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CAA2584C-9F18-46A2-A104-AE82081DBBA9}
+	EndGlobalSection
+EndGlobal
