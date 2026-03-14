@@ -7,4 +7,5 @@ public class ResponseModel
     public object? Data { get; set; }
     public string? RoleName { get; set; }
     public long? OrganizationId { get; set; }
+    public string? Username { get; set; }
 }

@@ -118,6 +118,7 @@ public class UserRepository : RepositoryBase<ApplicationUser>, IUserRepository
                 responseModel.Data = token;
                 responseModel.RoleName = user.Role;
                 responseModel.OrganizationId = user.OrganizationId;
+                responseModel.Username= user.UserName;
             }
         }
         return responseModel;
