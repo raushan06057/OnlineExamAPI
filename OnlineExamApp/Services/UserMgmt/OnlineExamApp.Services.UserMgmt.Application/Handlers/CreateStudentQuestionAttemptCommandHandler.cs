@@ -30,7 +30,10 @@ public class CreateStudentQuestionAttemptCommandHandler : IRequestHandler<Create
         var isRecordExists = await repository.HasQuestionAttemptAsync(questionAttemptDtl);
         if (isRecordExists)
         {
-            throw new QuestionAttemptAlreadyExistsException(nameof(request), null);
+            // throw new QuestionAttemptAlreadyExistsException(nameof(request), null);
+            responseModel.Success= false;
+            responseModel.Message = CommonResource.QuestionAttemptAlreadyExists;
+            return responseModel;
         }
         questionAttemptDtl.StudentInfoId = studentInfo.Id;
         questionAttemptDtl.CreatedOn = DateTime.UtcNow;

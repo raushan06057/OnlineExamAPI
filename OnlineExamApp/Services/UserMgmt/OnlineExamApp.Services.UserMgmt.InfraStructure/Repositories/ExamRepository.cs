@@ -11,7 +11,7 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
         var isExamExist = await context.Exams.AnyAsync(mod => mod.Title == name && mod.OrganizationId==organizationId);
         return isExamExist;
     }
-    public async Task<dynamic> GetExamsAsync()
+    public async Task<dynamic> GetExamsAsync(string username)
     {
         var result = await context.Exams.Include(mod => mod.Organization).Include(crs => crs.Course)
             .Include(sub => sub.Subject).Select(mod => new
@@ -58,6 +58,31 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
 
                       }).ToListAsync();
         //var result = string.Empty;
+        return result;
+    }
+
+    public async Task<dynamic> GetStudentExamResultsAsync(string userId)
+    {
+        //Total Marks, Marks Obtained, Total attempted questions, Total correct answer, Total wrong answer, Passed or Failed
+        var result = await (from exam in context.Exams
+                            join course in context.Courses
+                              on exam.CourseId equals course.Id
+                            join corsEnroll in context.CourseEnrollments
+                               on course.Id equals corsEnroll.CourseId
+                            join stud in context.StudentInfos
+                                on corsEnroll.StudentId equals stud.Id
+                            where stud.UserId == userId
+                            select new
+                            {
+                                exam.Id,
+                                exam.Title,
+                                exam.Description,
+                                exam.StartDate,
+                                exam.EndDate,
+                                exam.DurationInMinutes,
+                                exam.TotalMarks,
+                                exam.PassingMarks,
+                            }).ToListAsync();
         return result;
     }
 }

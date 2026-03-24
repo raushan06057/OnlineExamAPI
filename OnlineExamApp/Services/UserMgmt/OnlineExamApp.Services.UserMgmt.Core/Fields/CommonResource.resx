@@ -127,6 +127,9 @@
   <data name="PermissionDenined" xml:space="preserve">
     <value>Permission denined</value>
   </data>
+  <data name="QuestionAttemptAlreadyExists" xml:space="preserve">
+    <value>Question Attempt already exists</value>
+  </data>
   <data name="RecordAlreadyExists" xml:space="preserve">
     <value>Record already exists.</value>
   </data>

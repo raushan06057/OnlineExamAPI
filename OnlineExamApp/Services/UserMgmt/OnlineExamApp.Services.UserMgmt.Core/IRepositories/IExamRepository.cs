@@ -3,6 +3,7 @@
 public interface IExamRepository : IAsyncRepository<ExamEntity>
 {
     Task<bool> IsExamExistsAsync(string name, long organizationId);
-    Task<dynamic> GetExamsAsync();
+    Task<dynamic> GetExamsAsync(string username);
     Task<dynamic> GetStudentExamSchedules(string userId);
+    Task<dynamic> GetStudentExamResultsAsync(string userId);
 }

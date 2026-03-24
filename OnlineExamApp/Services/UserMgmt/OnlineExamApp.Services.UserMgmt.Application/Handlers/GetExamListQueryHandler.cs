@@ -13,7 +13,7 @@ public class GetExamListQueryHandler : IRequestHandler<GetExamListQuery, Respons
     {
         ResponseModel responseModel = new();
 
-        var exams = await repository.GetExamsAsync();
+        var exams = await repository.GetExamsAsync(request.Username);
 
         responseModel.Success = true;
         responseModel.Data = exams;

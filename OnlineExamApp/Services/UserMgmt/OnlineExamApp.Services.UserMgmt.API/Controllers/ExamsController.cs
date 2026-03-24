@@ -24,7 +24,8 @@ public class ExamsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<ResponseModel>> Get()
     {
-        var query = new GetExamListQuery();
+        string userId = Convert.ToString(HttpContext.Items[CommonFields.UserId]);
+        var query = new GetExamListQuery(userId);
         var result = await mediator.Send(query);
         return Ok(result);
     }

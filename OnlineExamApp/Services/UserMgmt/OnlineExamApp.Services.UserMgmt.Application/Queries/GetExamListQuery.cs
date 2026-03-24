@@ -2,4 +2,9 @@
 
 public class GetExamListQuery : IRequest<ResponseModel>
 {
+    public string? Username { get; set; }
+    public GetExamListQuery(string username)
+    {
+        this.Username = username;
+    }
 }

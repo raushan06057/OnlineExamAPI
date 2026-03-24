@@ -12,7 +12,7 @@ public class StudentsController : ControllerBase
         this.logger = logger;
         this.mediator = mediator;
     }
-
+    
     [HttpGet(CommonFields.GetById)]
     public async Task<ActionResult<ResponseModel>> GetById(int id)
     {
@@ -60,6 +60,15 @@ public class StudentsController : ControllerBase
     public async Task<ActionResult> Delete([FromBody] DeleteStudentInfoCommand model)
     {
         var result = await mediator.Send(model);
+        return Ok(result);
+    }
+
+    [HttpGet(CommonFields.GetStudentExamResults)]
+    public async Task<ActionResult<ResponseModel>> GetStudentExamResultsGetById()
+    {
+        string userId = Convert.ToString(HttpContext.Items[CommonFields.UserId]);
+        var query = new GetStudentExamResultsListQuery(userId);
+        var result = await mediator.Send(query);
         return Ok(result);
     }
 }

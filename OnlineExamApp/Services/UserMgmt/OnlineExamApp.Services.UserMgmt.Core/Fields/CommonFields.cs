@@ -29,6 +29,7 @@ public class CommonFields
     public const string Header = "Header";
     public const string CORSPolicy = "CORSPolicy";
     public const string OrganizationId = "OrganizationId";
+    public const string GetStudentExamResults = "GetStudentExamResults";
 
     //Controller Names
     public const string Organizations = "Organizations";
