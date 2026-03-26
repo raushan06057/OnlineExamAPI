@@ -69,9 +69,16 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                               on exam.CourseId equals course.Id
                             join corsEnroll in context.CourseEnrollments
                                on course.Id equals corsEnroll.CourseId
+
                             join stud in context.StudentInfos
                                 on corsEnroll.StudentId equals stud.Id
                             where stud.UserId == userId
+
+                            //join questionAttempt in context.QuestionAttempts
+                            //on stud.Id equals questionAttempt.StudentInfoId 
+
+                            //join attemptAnswer in context.AttemptAnswers 
+                            //on questionAttempt.Id equals attemptAnswer.QuestionAttemptId
                             select new
                             {
                                 exam.Id,
@@ -82,6 +89,43 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                                 exam.DurationInMinutes,
                                 exam.TotalMarks,
                                 exam.PassingMarks,
+                                TotalAttemptedQuestions = context.AttemptAnswers
+                                    .Where(aa => aa.IsSelected == true)
+                                    .Join(context.QuestionAttempts.Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id),
+                                          aa => aa.QuestionAttemptId,
+                                          qa => qa.Id,
+                                          (aa, qa) => qa.QuestionId)
+                                    .Distinct()
+                                    .Count(),
+                                // distinct questions where selected option was correct
+                                TotalCorrect = context.AttemptAnswers
+                                    .Where(aa => aa.IsSelected == true && aa.IsCorrect == true)
+                                    .Join(context.QuestionAttempts.Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id),
+                                          aa => aa.QuestionAttemptId,
+                                          qa => qa.Id,
+                                          (aa, qa) => qa.QuestionId)
+                                    .Distinct()
+                                    .Count(),
+
+                                // marks obtained: sum of question.Marks for questions that the student answered correctly
+                                MarksObtained = (context.QuestionAttempts
+                                    .Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id)
+                                    .Where(qa => context.AttemptAnswers.Any(aa => aa.QuestionAttemptId == qa.Id && aa.IsSelected == true && aa.IsCorrect == true))
+                                    .Join(context.Questions,
+                                          qa => qa.QuestionId,
+                                          q => q.Id,
+                                          (qa, q) => (int?)q.Marks)
+                                    .Sum() ?? 0),
+                                // wrong = attempted - correct
+                                TotalWrong = context.AttemptAnswers
+                                    .Where(aa => aa.IsSelected == true)
+                                    .Join(context.QuestionAttempts.Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id),
+                                          aa => aa.QuestionAttemptId,
+                                          qa => qa.Id,
+                                          (aa, qa) => qa.QuestionId)
+                                    .Distinct()
+                                    .Count()
+
                             }).ToListAsync();
         return result;
     }

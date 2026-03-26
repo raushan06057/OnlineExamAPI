@@ -64,7 +64,7 @@ public class StudentsController : ControllerBase
     }
 
     [HttpGet(CommonFields.GetStudentExamResults)]
-    public async Task<ActionResult<ResponseModel>> GetStudentExamResultsGetById()
+    public async Task<ActionResult<ResponseModel>> GetStudentExamResults()
     {
         string userId = Convert.ToString(HttpContext.Items[CommonFields.UserId]);
         var query = new GetStudentExamResultsListQuery(userId);
