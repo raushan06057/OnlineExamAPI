@@ -6,9 +6,9 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
     {
     }
 
-    public async Task<bool> IsExamExistsAsync(string name,long organizationId)
+    public async Task<bool> IsExamExistsAsync(string name, long organizationId)
     {
-        var isExamExist = await context.Exams.AnyAsync(mod => mod.Title == name && mod.OrganizationId==organizationId);
+        var isExamExist = await context.Exams.AnyAsync(mod => mod.Title == name && mod.OrganizationId == organizationId);
         return isExamExist;
     }
     public async Task<dynamic> GetExamsAsync(string username)
@@ -48,15 +48,15 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                                 on corsEnroll.StudentId equals stud.Id
                             where stud.UserId == studentId
                             select new
-                      {
-                          exam.Id,
-                          exam.Title,
-                          exam.Description,
-                          exam.StartDate,
-                          exam.EndDate,
-                          exam.DurationInMinutes,
+                            {
+                                exam.Id,
+                                exam.Title,
+                                exam.Description,
+                                exam.StartDate,
+                                exam.EndDate,
+                                exam.DurationInMinutes,
 
-                      }).ToListAsync();
+                            }).ToListAsync();
         //var result = string.Empty;
         return result;
     }
@@ -69,16 +69,9 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                               on exam.CourseId equals course.Id
                             join corsEnroll in context.CourseEnrollments
                                on course.Id equals corsEnroll.CourseId
-
                             join stud in context.StudentInfos
                                 on corsEnroll.StudentId equals stud.Id
                             where stud.UserId == userId
-
-                            //join questionAttempt in context.QuestionAttempts
-                            //on stud.Id equals questionAttempt.StudentInfoId 
-
-                            //join attemptAnswer in context.AttemptAnswers 
-                            //on questionAttempt.Id equals attemptAnswer.QuestionAttemptId
                             select new
                             {
                                 exam.Id,
@@ -127,6 +120,69 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                                     .Count()
 
                             }).ToListAsync();
+        return result;
+    }
+
+    public async Task<dynamic> GetStudentExamResultsByIdAsync(string userId, long examId)
+    {
+        //Total Marks, Marks Obtained, Total attempted questions, Total correct answer, Total wrong answer, Passed or Failed
+        var result = await (from exam in context.Exams
+                            join course in context.Courses
+                              on exam.CourseId equals course.Id
+                            join corsEnroll in context.CourseEnrollments
+                               on course.Id equals corsEnroll.CourseId
+
+                            join stud in context.StudentInfos
+                                on corsEnroll.StudentId equals stud.Id
+                            where stud.UserId == userId && exam.Id == examId
+                            select new
+                            {
+                                exam.Id,
+                                exam.Title,
+                                exam.Description,
+                                exam.StartDate,
+                                exam.EndDate,
+                                exam.DurationInMinutes,
+                                exam.TotalMarks,
+                                exam.PassingMarks,
+                                TotalAttemptedQuestions = context.AttemptAnswers
+                                    .Where(aa => aa.IsSelected == true)
+                                    .Join(context.QuestionAttempts.Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id),
+                                          aa => aa.QuestionAttemptId,
+                                          qa => qa.Id,
+                                          (aa, qa) => qa.QuestionId)
+                                    .Distinct()
+                                    .Count(),
+                                // distinct questions where selected option was correct
+                                TotalCorrect = context.AttemptAnswers
+                                    .Where(aa => aa.IsSelected == true && aa.IsCorrect == true)
+                                    .Join(context.QuestionAttempts.Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id),
+                                          aa => aa.QuestionAttemptId,
+                                          qa => qa.Id,
+                                          (aa, qa) => qa.QuestionId)
+                                    .Distinct()
+                                    .Count(),
+
+                                // marks obtained: sum of question.Marks for questions that the student answered correctly
+                                MarksObtained = (context.QuestionAttempts
+                                    .Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id)
+                                    .Where(qa => context.AttemptAnswers.Any(aa => aa.QuestionAttemptId == qa.Id && aa.IsSelected == true && aa.IsCorrect == true))
+                                    .Join(context.Questions,
+                                          qa => qa.QuestionId,
+                                          q => q.Id,
+                                          (qa, q) => (int?)q.Marks)
+                                    .Sum() ?? 0),
+                                // wrong = attempted - correct
+                                TotalWrong = context.AttemptAnswers
+                                    .Where(aa => aa.IsSelected == true)
+                                    .Join(context.QuestionAttempts.Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id),
+                                          aa => aa.QuestionAttemptId,
+                                          qa => qa.Id,
+                                          (aa, qa) => qa.QuestionId)
+                                    .Distinct()
+                                    .Count()
+
+                            }).FirstOrDefaultAsync();
         return result;
     }
 }

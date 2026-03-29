@@ -15,3 +15,6 @@ global using Microsoft.IdentityModel.Tokens;
 global using System.IdentityModel.Tokens.Jwt;
 global using System.Text;
 global using Microsoft.AspNetCore.Http;
+global using MailKit.Net.Smtp;
+global using MimeKit;
+global using System.Threading.Tasks;

@@ -20,4 +20,15 @@ public class StudentQuestionAttemptsController : ControllerBase
         var result = await mediator.Send(model);
         return Ok(result);
     }
+
+    [HttpGet("{id}", Name = CommonFields.Submit)]
+    [ProducesResponseType(typeof(ResponseModel), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> Submit(long id)
+    {
+        var model = new CreateStudentExamSubmitCommand();
+        model.CreatedBy = HttpContext.Items[CommonFields.UserId] as string;
+        model.ExamId = id;
+        var result = await mediator.Send(model);
+        return Ok(result);
+    }
 }

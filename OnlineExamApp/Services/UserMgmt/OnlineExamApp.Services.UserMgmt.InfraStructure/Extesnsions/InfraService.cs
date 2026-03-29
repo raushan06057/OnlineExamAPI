@@ -47,6 +47,7 @@ public static class InfraService
         services.AddScoped<IAnswerRepository, AnswerRepository>();
         services.AddScoped<IStudentQuestionAttemptRepository, StudentQuestionAttemptRepository>();
         services.AddScoped<IAttemptAnswersRepository, AttemptAnswersRepository>();
+        services.AddScoped<IEmailService, EmailService>();
         return services;
     }
 }
