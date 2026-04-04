@@ -47,6 +47,10 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                             join stud in context.StudentInfos
                                 on corsEnroll.StudentId equals stud.Id
                             where stud.UserId == studentId
+                                  // exclude exams that already have question attempts or attempt answers for this student
+                                  && !context.QuestionAttempts.Any(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id)
+                                  && !context.AttemptAnswers.Any(aa => context.QuestionAttempts
+                                                                      .Any(qa => qa.Id == aa.QuestionAttemptId && qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id))
                             select new
                             {
                                 exam.Id,
@@ -71,7 +75,8 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                                on course.Id equals corsEnroll.CourseId
                             join stud in context.StudentInfos
                                 on corsEnroll.StudentId equals stud.Id
-                            where stud.UserId == userId
+                            where stud.UserId == userId && context.QuestionAttempts.Any(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id) && context.AttemptAnswers.Any(aa => context.QuestionAttempts.Any(qa => qa.Id == aa.QuestionAttemptId && qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id))
+
                             select new
                             {
                                 exam.Id,

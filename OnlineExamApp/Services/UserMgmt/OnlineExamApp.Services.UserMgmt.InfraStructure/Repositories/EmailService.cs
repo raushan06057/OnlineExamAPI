@@ -6,8 +6,6 @@ public class EmailService : IEmailService
     {
         try
         {
-
-
             var email = new MimeMessage();
             email.From.Add(new MailboxAddress("", "raushanaria@gmail.com"));
             email.To.Add(MailboxAddress.Parse(toEmail));
