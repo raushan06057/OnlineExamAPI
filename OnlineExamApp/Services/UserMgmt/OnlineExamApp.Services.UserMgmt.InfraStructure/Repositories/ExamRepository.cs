@@ -128,7 +128,7 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
         return result;
     }
 
-    public async Task<dynamic> GetStudentExamResultsByIdAsync(string userId, long examId)
+    public async Task<StudentPerformanceDto> GetStudentExamResultsByIdAsync(string userId, long examId)
     {
         //Total Marks, Marks Obtained, Total attempted questions, Total correct answer, Total wrong answer, Passed or Failed
         var result = await (from exam in context.Exams
@@ -140,16 +140,16 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                             join stud in context.StudentInfos
                                 on corsEnroll.StudentId equals stud.Id
                             where stud.UserId == userId && exam.Id == examId
-                            select new
+                            select new StudentPerformanceDto()
                             {
-                                exam.Id,
-                                exam.Title,
-                                exam.Description,
-                                exam.StartDate,
-                                exam.EndDate,
-                                exam.DurationInMinutes,
-                                exam.TotalMarks,
-                                exam.PassingMarks,
+                                Id = exam.Id,
+                                Title = exam.Title,
+                                Description = exam.Description,
+                                StartDate = exam.StartDate,
+                                EndDate = exam.EndDate,
+                                DurationInMinutes = exam.DurationInMinutes,
+                                TotalMarks = exam.TotalMarks,
+                                PassingMarks = exam.PassingMarks,
                                 TotalAttemptedQuestions = context.AttemptAnswers
                                     .Where(aa => aa.IsSelected == true)
                                     .Join(context.QuestionAttempts.Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id),

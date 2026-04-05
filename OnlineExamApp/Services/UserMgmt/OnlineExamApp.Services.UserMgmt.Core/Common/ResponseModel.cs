@@ -8,4 +8,5 @@ public class ResponseModel
     public string? RoleName { get; set; }
     public long? OrganizationId { get; set; }
     public string? Username { get; set; }
+    public ChatResponse? ChatResponse { get; set; }
 }

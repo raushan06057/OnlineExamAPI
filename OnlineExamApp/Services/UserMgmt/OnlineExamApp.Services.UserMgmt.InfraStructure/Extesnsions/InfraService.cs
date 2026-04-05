@@ -4,6 +4,9 @@ public static class InfraService
 {
     public static IServiceCollection AddInfraService(this IServiceCollection services, IConfiguration configuration)
     {
+        // Register Ollama client
+        services.AddSingleton<IChatClient>(sp =>
+            new OllamaApiClient(new Uri("http://localhost:11434"), "llama3.2"));
         //services.AddDbContext<ApplicationDbContext>(opt =>
         //{
         //    opt.UseSqlServer(
@@ -48,6 +51,7 @@ public static class InfraService
         services.AddScoped<IStudentQuestionAttemptRepository, StudentQuestionAttemptRepository>();
         services.AddScoped<IAttemptAnswersRepository, AttemptAnswersRepository>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddAiInsights(configuration);
         return services;
     }
 }

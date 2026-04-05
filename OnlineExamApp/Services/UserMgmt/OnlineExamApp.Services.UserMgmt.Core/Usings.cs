@@ -6,3 +6,5 @@ global using System.Security.Claims;
 global using OnlineExamApp.Services.UserMgmt.Core.Fields;
 global using System.ComponentModel.DataAnnotations.Schema;
 global using System.ComponentModel.DataAnnotations;
+global using Microsoft.Extensions.AI;
+global using OnlineExamApp.Services.UserMgmt.Core.Models;

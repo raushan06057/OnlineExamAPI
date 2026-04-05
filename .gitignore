@@ -12,3 +12,8 @@
 /OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.Core/obj
 /OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.Application/bin/Debug/net8.0
 /OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.Application/obj
+/.vs
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.Core/Entities/GuardianInfoEntity.cs
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.InfraStructure/Migrations/20260307171826_AddedXYZColInGuardian.cs
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.InfraStructure/Migrations/20260307171826_AddedXYZColInGuardian.Designer.cs
+/OnlineExamApp/Services/UserMgmt/OnlineExamApp.Services.UserMgmt.InfraStructure/Migrations/ApplicationDbContextModelSnapshot.cs
