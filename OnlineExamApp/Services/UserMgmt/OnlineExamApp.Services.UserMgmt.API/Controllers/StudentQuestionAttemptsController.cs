@@ -31,4 +31,14 @@ public class StudentQuestionAttemptsController : ControllerBase
         var result = await mediator.Send(model);
         return Ok(result);
     }
+    [HttpGet("{id}/graph")]
+    [ProducesResponseType(typeof(ResponseModel), (int)HttpStatusCode.OK)]
+    public async Task<ActionResult> Graph(long id)
+    {
+        var model = new CreateStudentExamGraphCommand();
+        model.CreatedBy = HttpContext.Items[CommonFields.UserId] as string;
+        model.ExamId = id;
+        var result = await mediator.Send(model);
+        return Ok(result);
+    }
 }

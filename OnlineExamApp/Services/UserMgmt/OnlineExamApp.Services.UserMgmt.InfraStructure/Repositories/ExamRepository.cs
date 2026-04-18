@@ -144,6 +144,7 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                             {
                                 Id = exam.Id,
                                 Title = exam.Title,
+                                UserId = stud.UserId,
                                 Description = exam.Description,
                                 StartDate = exam.StartDate,
                                 EndDate = exam.EndDate,
@@ -179,7 +180,7 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                                     .Sum() ?? 0),
                                 // wrong = attempted - correct
                                 TotalWrong = context.AttemptAnswers
-                                    .Where(aa => aa.IsSelected == true)
+                                    .Where(aa => aa.IsSelected == true && aa.IsCorrect==false)
                                     .Join(context.QuestionAttempts.Where(qa => qa.ExamId == exam.Id && qa.StudentInfoId == stud.Id),
                                           aa => aa.QuestionAttemptId,
                                           qa => qa.Id,
@@ -188,6 +189,24 @@ public class ExamRepository : RepositoryBase<ExamEntity>, IExamRepository
                                     .Count()
 
                             }).FirstOrDefaultAsync();
+        result.QuestionPerformanceDtos = await GetQuestionsWithIsCorrect(userId, examId);
         return result;
+    }
+
+    private async Task<List<QuestionPerformanceDto>> GetQuestionsWithIsCorrect(string userId, long examId)
+    {
+        var result = await (from qa in context.QuestionAttempts
+                            join q in context.Questions on qa.QuestionId equals q.Id
+                            join stud in context.StudentInfos on qa.StudentInfoId equals stud.Id
+                            where stud.UserId == userId && qa.ExamId == examId
+                            select new QuestionPerformanceDto
+                            {
+                                QuestionId = q.Id,
+                                QuestionText = q.Text,
+                                MaxMarks = q.Marks,
+                                IsCorrect = context.AttemptAnswers.Any(aa => aa.QuestionAttemptId == qa.Id && aa.IsSelected == true && aa.IsCorrect == true)
+                            }).ToListAsync();
+        return result;
+        // Implementation for fetching questions with correctness information
     }
 }

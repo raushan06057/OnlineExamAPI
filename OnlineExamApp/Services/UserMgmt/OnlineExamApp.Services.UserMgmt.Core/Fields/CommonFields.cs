@@ -31,6 +31,7 @@ public class CommonFields
     public const string OrganizationId = "OrganizationId";
     public const string GetStudentExamResults = "GetStudentExamResults";
     public const string Submit="Submit";
+    public const string Graph = "Graph";
 
     //Controller Names
     public const string Organizations = "Organizations";
